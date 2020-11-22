@@ -31,7 +31,7 @@ export function writePkgFile(pkgFile: string, noConsole = false) {
       if (!noConsole) {
         console.log(`publishConfig.registry exists`, json.publishConfig.registry)
       }
-      return false
+      return true
     }
     const registryKey = `${projectNamespace}:registry`
     json.publishConfig = json.publishConfig || {}
