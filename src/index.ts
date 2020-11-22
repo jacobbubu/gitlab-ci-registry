@@ -33,7 +33,7 @@ export function writePkgFile(pkgFile: string, noConsole = false) {
       }
       return true
     }
-    const registryKey = `${projectNamespace}:registry`
+    const registryKey = `@${projectNamespace}:registry`
     json.publishConfig = json.publishConfig || {}
     json.publishConfig[registryKey] = url
 

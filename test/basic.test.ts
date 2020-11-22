@@ -61,7 +61,7 @@ describe('simple', () => {
 
     expect(writePkgFile(pkgFile, true)).toBeTruthy()
     const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
-    const expectedRegistryKey = `${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
+    const expectedRegistryKey = `@${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
     expect(pkg.publishConfig[expectedRegistryKey]).toBe(
       `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm/`
     )
@@ -81,7 +81,7 @@ describe('simple', () => {
 
     expect(writePkgFile(pkgFile, true)).toBeTruthy()
     const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
-    const expectedRegistryKey = `${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
+    const expectedRegistryKey = `@${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
     expect(pkg.publishConfig[expectedRegistryKey]).toBe(
       `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}:${process.env.CI_SERVER_PORT}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm/`
     )
