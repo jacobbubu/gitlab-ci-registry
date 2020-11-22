@@ -48,6 +48,7 @@ describe('simple', () => {
   })
 
   it('changed with PORT 443', () => {
+    process.env.CI_PROJECT_ROOT_NAMESPACE = 'li-mesh'
     process.env.CI_SERVER_HOST = 'gitlab.com'
     process.env.CI_SERVER_PROTOCOL = 'https'
     process.env.CI_SERVER_PORT = '443'
@@ -60,12 +61,14 @@ describe('simple', () => {
 
     expect(writePkgFile(pkgFile, true)).toBeTruthy()
     const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
-    expect(pkg.publishConfig.registry).toBe(
-      `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm`
+    const expectedRegistryKey = `${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
+    expect(pkg.publishConfig[expectedRegistryKey]).toBe(
+      `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm/`
     )
   })
 
   it('changed with PORT 8080', () => {
+    process.env.CI_PROJECT_ROOT_NAMESPACE = 'li-mesh'
     process.env.CI_SERVER_HOST = 'gitlab.com'
     process.env.CI_SERVER_PROTOCOL = 'https'
     process.env.CI_SERVER_PORT = '8080'
@@ -78,8 +81,9 @@ describe('simple', () => {
 
     expect(writePkgFile(pkgFile, true)).toBeTruthy()
     const pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
-    expect(pkg.publishConfig.registry).toBe(
-      `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}:${process.env.CI_SERVER_PORT}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm`
+    const expectedRegistryKey = `${process.env.CI_PROJECT_ROOT_NAMESPACE}:registry`
+    expect(pkg.publishConfig[expectedRegistryKey]).toBe(
+      `${process.env.CI_SERVER_PROTOCOL}://${process.env.CI_SERVER_HOST}:${process.env.CI_SERVER_PORT}/api/v4/projects/${process.env.CI_PROJECT_ID}/packages/npm/`
     )
   })
 })
